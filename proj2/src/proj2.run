@@ -1,0 +1,7 @@
+reset;
+option solver cplex;
+model src/proj2.mod;
+data src/proj2.dat;
+solve;
+
+display total_profit;

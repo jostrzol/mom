@@ -1,0 +1,28 @@
+set MaterialCostRanges :=
+  S1, 1,
+  S1, 2,
+  S1, 3,
+  S2, 1,
+  S2, 2,
+  S2, 3,
+;
+
+param material_limit =
+  S1 9000,
+  S2 8000,
+;
+
+param material_unit_cost =
+  [S1,*] 1 10,  2  7,  3  5,
+  [S2,*] 1  9,  2 11,  3 15,
+;
+
+param material_unit_cost_bound =
+  [S1,*] 1 2056,  2 4834,  3 Infinity,
+  [S2,*] 1 1968,  2 4417,  3 Infinity,
+;
+
+param material_unit_cost_convex =
+  S1 0,
+  S2 1,
+;
