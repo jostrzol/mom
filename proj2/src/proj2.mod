@@ -48,5 +48,33 @@ s.t. material_bought_max_concave {(m, r) in MaterialCostRanges : material_unit_c
     else
       M * material_unit_cost_range_depleted[m, r-1];
 
+param S1_truck_capacity;
+param S1_truck_unit_cost;
+param S1_trailer_capacity;
+param S1_trailer_unit_cost;
+param S1_truck_n_max;
+param S2_truck_capacity;
+param S2_truck_unit_cost;
+
+var S1_to_factory_truck_n integer <= S1_truck_n_max;
+var S1_to_factory_trailer_n integer;
+var S2_to_factory >= 0;
+var S2_to_factory_truck_n integer;
+var S2_to_heat_treatment = material_bought["S2"] - S2_to_factory;
+var S2_to_heat_treatment_truck_n integer;
+
+s.t. S1_to_factory_max_one_trailer_per_truck:
+  S1_to_factory_trailer_n <= S1_to_factory_truck_n;
+
+s.t. S1_to_factory_all_delivered:
+  material_bought["S1"] <=
+    S1_to_factory_truck_n * S1_truck_capacity + S1_to_factory_trailer_n * S1_trailer_capacity;
+
+s.t. S2_to_factory_all_delivered:
+  S2_to_factory <= S2_to_factory_truck_n * S2_truck_capacity;
+
+s.t. S2_to_heat_treatment_all_delivered:
+  S2_to_heat_treatment <= S2_to_heat_treatment_truck_n * S2_truck_capacity;
+
 maximize total_profit:
   sum {m in Materials} material_bought[m];

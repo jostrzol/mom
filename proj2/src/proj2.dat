@@ -26,3 +26,12 @@ param material_unit_cost_convex =
   S1 0,
   S2 1,
 ;
+
+
+param S1_truck_capacity = 20;
+param S1_truck_unit_cost = 1070;
+param S1_trailer_capacity = 14;
+param S1_trailer_unit_cost = 730;
+param S1_truck_n_max = 337;
+param S2_truck_capacity = 25;
+param S2_truck_unit_cost = 1500;
