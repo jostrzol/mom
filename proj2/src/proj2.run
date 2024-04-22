@@ -5,3 +5,29 @@ data src/proj2.dat;
 solve;
 
 display total_profit;
+display material_bought;
+display material_bought_in_range, material_unit_cost_range_depleted;
+display material_cost_total;
+
+display
+  S1_to_factory_truck_n,
+  S1_to_factory_trailer_n,
+  S2_to_factory,
+  S2_to_factory_truck_n,
+  S2_to_heat_treatment,
+  S2_to_heat_treatment_truck_n
+;
+display delivery_cost_total;
+
+display factory_stock;
+display factory_halfproduct_made;
+display factory_throughput, factory_worker_n;
+display factory_cost_total;
+
+display heat_treatment_throughput;
+display heat_treatment_cost_total;
+
+display product_made;
+display sell_revenue_total;
+
+display total_profit;

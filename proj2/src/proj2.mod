@@ -74,6 +74,9 @@ s.t. S1_to_factory_all_delivered:
   material_bought["S1"] <=
     S1_to_factory_truck_n * S1_truck_capacity + S1_to_factory_trailer_n * S1_trailer_capacity;
 
+s.t. S2_to_factory_max:
+  S2_to_factory <= material_bought["S2"];
+
 s.t. S2_to_factory_all_delivered:
   S2_to_factory <= S2_to_factory_truck_n * S2_truck_capacity;
 
@@ -112,6 +115,8 @@ s.t. heat_treatment_throughput_min_limit:
   heat_treatment_throughput >= heat_treatment_throughput_min * heat_treatment_enabled;
 s.t. heat_treatment_throughput_max_limit:
   heat_treatment_throughput <= heat_treatment_throughput_max * heat_treatment_enabled;
+s.t. heat_treatment_throughput_max_limit_stock:
+  heat_treatment_throughput <= S2_to_heat_treatment;
 
 
 param product_unit_revenue {Products};
