@@ -20,10 +20,9 @@ param M = 1e6;
 var material_bought_in_range {MaterialCostRanges};
 var material_bought {m in Materials}
   = sum {(mm, r) in MaterialCostRanges : mm = m} material_bought_in_range[m, r];
-#var material_bought {Materials} >= 0;
-var material_price_total {m in Materials}
-  = sum {(mm, r) in MaterialCostRanges : mm = m} material_bought_in_range[m, r] * material_unit_cost[m, r];
 var material_unit_cost_range_depleted {(m, r) in MaterialCostRanges : material_unit_cost_convex[m] = 0} binary;
+var material_cost_total
+  = sum {(m, r) in MaterialCostRanges} material_bought_in_range[m, r] * material_unit_cost[m, r];
 
 s.t. material_limit_not_exceeded {m in Materials}:
   material_bought[m] <= material_limit[m];
@@ -92,7 +91,7 @@ var factory_halfproduct_made {hp in HalfProducts}
   = sum {m in Materials} factory_stock[m] * factory_halfproduct_per_material[m, hp];
 var factory_throughput = sum {m in Materials} factory_stock[m];
 var factory_worker_n integer;
-var factory_price_total = factory_worker_n * factory_worker_salary;
+var factory_cost_total = factory_worker_n * factory_worker_salary;
 
 s.t. factory_stock_S1: factory_stock["S1"] = material_bought["S1"];
 s.t. factory_stock_S2: factory_stock["S2"] = S2_to_factory;
@@ -107,12 +106,25 @@ param heat_treatment_unit_cost;
 
 var heat_treatment_throughput;
 var heat_treatment_enabled binary;
-var heat_treatment_price_total = heat_treatment_throughput * heat_treatment_unit_cost;
+var heat_treatment_cost_total = heat_treatment_throughput * heat_treatment_unit_cost;
 
 s.t. heat_treatment_throughput_min_limit:
   heat_treatment_throughput >= heat_treatment_throughput_min * heat_treatment_enabled;
 s.t. heat_treatment_throughput_max_limit:
   heat_treatment_throughput <= heat_treatment_throughput_max * heat_treatment_enabled;
+
+
+param product_unit_revenue {Products};
+param product_production_min {Products};
+
+var product_made {Products};
+var sell_revenue_total = sum {p in Products} product_made[p] * product_unit_revenue[p];
+
+s.t. product_made_W1: product_made["W1"] = factory_halfproduct_made["D1"];
+s.t. product_made_W2:
+  product_made["W2"] = factory_halfproduct_made["D2"] + heat_treatment_throughput;
+s.t. product_made_min {p in Products}:
+  product_made[p] >= product_production_min[p];
 
 maximize total_profit:
   sum {m in Materials} material_bought[m];

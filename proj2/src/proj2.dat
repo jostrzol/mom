@@ -50,3 +50,13 @@ param factory_worker_salary = 200;
 param heat_treatment_throughput_min = 2000;
 param heat_treatment_throughput_max = 6000;
 param heat_treatment_unit_cost = 43;
+
+
+param product_unit_revenue =
+  W1 422,
+  W2 462,
+;
+param product_production_min =
+  W1 4250,
+  W2 4250,
+;
