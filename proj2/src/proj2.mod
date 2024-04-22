@@ -101,5 +101,18 @@ s.t. factory_worker_n_min:
   factory_worker_n >= factory_throughput /
     factory_production_unit_size * factory_worker_n_per_production_unit;
 
+param heat_treatment_throughput_min;
+param heat_treatment_throughput_max;
+param heat_treatment_unit_cost;
+
+var heat_treatment_throughput;
+var heat_treatment_enabled binary;
+var heat_treatment_price_total = heat_treatment_throughput * heat_treatment_unit_cost;
+
+s.t. heat_treatment_throughput_min_limit:
+  heat_treatment_throughput >= heat_treatment_throughput_min * heat_treatment_enabled;
+s.t. heat_treatment_throughput_max_limit:
+  heat_treatment_throughput <= heat_treatment_throughput_max * heat_treatment_enabled;
+
 maximize total_profit:
   sum {m in Materials} material_bought[m];
