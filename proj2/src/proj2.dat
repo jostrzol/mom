@@ -35,3 +35,13 @@ param S1_trailer_unit_cost = 730;
 param S1_truck_n_max = 337;
 param S2_truck_capacity = 25;
 param S2_truck_unit_cost = 1500;
+
+
+param factory_halfproduct_per_material =
+  [S1,*] D1 0.4, D2 0.6,
+  [S2,*] D1 0.8, D2 0.2,
+;
+param factory_capacity = 13600;
+param factory_production_unit_size = 200;
+param factory_worker_n_per_production_unit = 2;
+param factory_worker_salary = 200;
