@@ -127,4 +127,5 @@ s.t. product_made_min {p in Products}:
   product_made[p] >= product_production_min[p];
 
 maximize total_profit:
-  sum {m in Materials} material_bought[m];
+  sell_revenue_total- material_cost_total - delivery_cost_total - factory_cost_total -
+  heat_treatment_cost_total;
