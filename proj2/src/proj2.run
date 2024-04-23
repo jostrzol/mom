@@ -6,7 +6,7 @@ solve;
 
 display total_profit;
 display material_bought;
-display material_bought_in_range, material_unit_cost_range_depleted;
+display material_bought_in_range, S2_unit_cost_range_depleted;
 display material_cost_total;
 
 display

@@ -1,52 +1,55 @@
+# Sets and general parameters
+
 set Materials = {"S1", "S2"};
 set HalfProducts = {"D1", "D2"};
 set Products = {"W1", "W2"};
-set MaterialCostRanges within {Materials, 1..Infinity};
+param material_cost_range_n;
+set CostRanges = {1..material_cost_range_n};
+
+param M = 1e6;
+
+# Material purchase parameters, variables and constraints
 
 param material_limit {Materials};
-param material_unit_cost {MaterialCostRanges};
-param material_unit_cost_bound {MaterialCostRanges};
-param material_unit_cost_convex {Materials} binary;
-param material_unit_cost_range_width {(m, r) in MaterialCostRanges} =
+param material_unit_cost {Materials, CostRanges};
+param material_unit_cost_bound {Materials, CostRanges};
+param material_unit_cost_range_width {m in Materials, r in CostRanges} =
   if (r = 1) then
     material_unit_cost_bound[m, r]
   else
     material_unit_cost_bound[m, r] - material_unit_cost_bound[m, r-1];
-param material_unit_cost_range_last {m in Materials}
-  = max {(mm, r) in MaterialCostRanges : m = mm} r;
 
-param M = 1e6;
-
-var material_bought_in_range {MaterialCostRanges};
-var material_bought {m in Materials}
-  = sum {(mm, r) in MaterialCostRanges : mm = m} material_bought_in_range[m, r];
-var material_unit_cost_range_depleted {(m, r) in MaterialCostRanges : material_unit_cost_convex[m] = 0} binary;
+var material_bought_in_range {Materials, CostRanges};
+var material_bought {m in Materials} = sum {r in CostRanges} material_bought_in_range[m, r];
 var material_cost_total
-  = sum {(m, r) in MaterialCostRanges} material_bought_in_range[m, r] * material_unit_cost[m, r];
+  = sum {m in Materials, r in CostRanges} material_bought_in_range[m, r] * material_unit_cost[m, r];
+var S2_unit_cost_range_depleted {r in CostRanges} binary;
 
 s.t. material_limit_not_exceeded {m in Materials}:
   material_bought[m] <= material_limit[m];
 
-s.t. material_bought_min_convex {(m, r) in MaterialCostRanges : material_unit_cost_convex[m] = 1}:
-  material_bought_in_range[m, r] >= 0;
+s.t. S2_bought_min {r in CostRanges}:
+  material_bought_in_range["S2", r] >= 0;
 
-s.t. material_bought_max_convex {(m, r) in MaterialCostRanges : material_unit_cost_convex[m] = 1}:
-  material_bought_in_range[m, r] <= material_unit_cost_range_width[m, r];
+s.t. S2_bought_max {r in CostRanges}:
+  material_bought_in_range["S2", r] <= material_unit_cost_range_width["S2", r];
 
-s.t. material_bought_min_concave {(m, r) in MaterialCostRanges : material_unit_cost_convex[m] = 0}:
-  material_bought_in_range[m, r] >=
-    if (r != material_unit_cost_range_last[m]) then
-      material_unit_cost_range_width[m, r] * material_unit_cost_range_depleted[m, r]
+s.t. S1_bought_min {r in CostRanges}:
+  material_bought_in_range["S1", r] <=
+    if (r != material_cost_range_n) then
+      material_unit_cost_range_width["S1", r] * S2_unit_cost_range_depleted[r]
     else 0;
 
-s.t. material_bought_max_concave {(m, r) in MaterialCostRanges : material_unit_cost_convex[m] = 0}:
-  material_bought_in_range[m, r] <=
+s.t. S1_bought_max {r in CostRanges}:
+  material_bought_in_range["S1", r] <=
     if (r == 1) then
-      material_unit_cost_range_width[m, r]
-    else if (r != material_unit_cost_range_last[m]) then
-      material_unit_cost_range_width[m, r] * material_unit_cost_range_depleted[m, r-1]
+      material_unit_cost_range_width["S1", r]
+    else if (r != material_cost_range_n) then
+      material_unit_cost_range_width["S1", r] * S2_unit_cost_range_depleted[r-1]
     else
-      M * material_unit_cost_range_depleted[m, r-1];
+      M * S2_unit_cost_range_depleted[r-1];
+
+# Material delivery parameters, variables and constraints
 
 param S1_truck_capacity;
 param S1_truck_unit_cost;
@@ -83,6 +86,8 @@ s.t. S2_to_factory_all_delivered:
 s.t. S2_to_heat_treatment_all_delivered:
   S2_to_heat_treatment <= S2_to_heat_treatment_truck_n * S2_truck_capacity;
 
+# Factory production parameters, variables and constraints
+
 param factory_halfproduct_per_material {Materials, HalfProducts};
 param factory_capacity;
 param factory_production_unit_size;
@@ -103,6 +108,8 @@ s.t. factory_worker_n_min:
   factory_worker_n >= factory_throughput /
     factory_production_unit_size * factory_worker_n_per_production_unit;
 
+# Heat treatment parameters, variables and constraints
+
 param heat_treatment_throughput_min;
 param heat_treatment_throughput_max;
 param heat_treatment_unit_cost;
@@ -118,6 +125,7 @@ s.t. heat_treatment_throughput_max_limit:
 s.t. heat_treatment_throughput_max_limit_stock:
   heat_treatment_throughput <= S2_to_heat_treatment;
 
+# Revenue parameters, variables and constraints
 
 param product_unit_revenue {Products};
 param product_production_min {Products};
@@ -130,6 +138,8 @@ s.t. product_made_W2:
   product_made["W2"] = factory_halfproduct_made["D2"] + heat_treatment_throughput;
 s.t. product_made_min {p in Products}:
   product_made[p] >= product_production_min[p];
+
+# Optimization target
 
 maximize total_profit:
   sell_revenue_total- material_cost_total - delivery_cost_total - factory_cost_total -
