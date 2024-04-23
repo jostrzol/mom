@@ -4,10 +4,13 @@ model src/proj2.mod;
 data src/proj2.dat;
 solve;
 
-display total_profit;
+printf "\n# MATERIAL VARIABLES OPTIMAL VALUES\n";
+
 display material_bought;
-display material_bought_in_range, S2_unit_cost_range_depleted;
+display material_bought_in_range;
 display material_cost_total;
+
+printf "\n# DELIVERY VARIABLES OPTIMAL VALUES\n";
 
 display
   S1_to_factory_truck_n,
@@ -19,15 +22,23 @@ display
 ;
 display delivery_cost_total;
 
+printf "\n# FACTORY PRODUCTION VARIABLES OPTIMAL VALUES\n";
+
 display factory_stock;
 display factory_halfproduct_made;
 display factory_throughput, factory_worker_n;
 display factory_cost_total;
 
+printf "\n# HEAT TREATMENT VARIABLES OPTIMAL VALUES\n";
+
 display heat_treatment_throughput;
 display heat_treatment_cost_total;
 
+printf "\n# REVENUE VARIABLES OPTIMAL VALUES\n";
+
 display product_made;
 display sell_revenue_total;
+
+printf "\n# OPTIMIZATION TARGET OPTIMAL VALUE\n";
 
 display total_profit;

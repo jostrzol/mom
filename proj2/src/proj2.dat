@@ -1,9 +1,10 @@
-# General parameters
+# GENERAL PARAMETERS
 
 param material_cost_range_n = 3;
+param M = 1e6;
 
 
-# Material purchase parameters
+# MATERIAL PURCHASE PARAMETERS
 
 param material_limit =
   S1 9000,
@@ -21,7 +22,7 @@ param material_unit_cost_bound =
 ;
 
 
-# Material delivery parameters
+# MATERIAL DELIVERY PARAMETERS
 
 param S1_truck_capacity = 20;
 param S1_truck_unit_cost = 1070;
@@ -32,7 +33,7 @@ param S2_truck_capacity = 25;
 param S2_truck_unit_cost = 1500;
 
 
-# Factory production parameters
+# FACTORY PRODUCTION PARAMETERS
 
 param factory_halfproduct_per_material =
   [S1,*] D1 0.4, D2 0.6,
@@ -44,14 +45,14 @@ param factory_worker_n_per_production_unit = 2;
 param factory_worker_salary = 200;
 
 
-# Heat treatment parameters
+# HEAT TREATMENT PARAMETERS
 
 param heat_treatment_throughput_min = 2000;
 param heat_treatment_throughput_max = 6000;
 param heat_treatment_unit_cost = 43;
 
 
-# Revenue parameters
+# REVENUE PARAMETERS
 
 param product_unit_revenue =
   W1 422,
