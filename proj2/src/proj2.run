@@ -1,5 +1,7 @@
 reset;
 option solver cplex;
+option display_precision 9;
+option solution_precision 9;
 model src/proj2.mod;
 data src/proj2.dat;
 solve;
