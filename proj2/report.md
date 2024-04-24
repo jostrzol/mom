@@ -12,9 +12,9 @@ $M$ nie zmieniłoby rozwiązania).
 
 ## Zbiory
 
-* $S = \{S_1, S_2\}$ -- dostępne materiały
-* $D = \{D_1, D_2\}$ -- półprodukty wytwarzane w przygotowalni
-* $W = \{W_1, W_2\}$ -- produkty końcowe tworzone w rozważanym procesie
+* $S = \{S1, S2\}$ -- dostępne materiały
+* $D = \{D1, D2\}$ -- półprodukty wytwarzane w przygotowalni
+* $W = \{W1, W2\}$ -- produkty końcowe tworzone w rozważanym procesie
 * $R = \{1, 2, 3\}$ -- zakresy funkcji ceny kosztu jednostkowego materiału,
     w obrębie których funkcja jest liniowa
 
@@ -36,11 +36,11 @@ Będzie to przydatne już w kolejnym rozdziale.
 
 ## Zakup materiałów
 
-Funkcje kosztu jednostkowego materiałów $S_1$ i $S_2$ są to odcinkami liniowe
+Funkcje kosztu jednostkowego materiałów $S1$ i $S2$ są to odcinkami liniowe
 funkcje o dziedzinie w zbiorze nieujemnych liczb rzeczywistych. Ponadto, funkcja
-ta dla $S_1$ jest wklęsła, a dla $S_2$ wypukła. A zatem, mając na uwadze fakt, że
+ta dla $S1$ jest wklęsła, a dla $S2$ wypukła. A zatem, mając na uwadze fakt, że
 cena materiałów jest minimalizowana, możliwe jest obliczenie całkowitego kosztu
-dla $S_2$ bez użycia zmiennych całkowitoliczbowych. Dla $S_1$ natomiast zajdzie
+dla $S2$ bez użycia zmiennych całkowitoliczbowych. Dla $S1$ natomiast zajdzie
 konieczność użycia zmiennych całkowitoliczbowych.
 
 Parametry:
@@ -65,7 +65,7 @@ Zmienne:
 * $x_s = \sum_{r \in R} x_{sr}$ -- całkowita ilość kupionego materiału $s$
     [tona]
 * $v_r \in \{0, 1\} \: \forall r \in \{1, 2\}$ -- czy ilość kupionego materiału
-    $S_1$ przekracza prawą granicę przedziału cenowego $r$ (zmienna binarna)
+    $S1$ przekracza prawą granicę przedziału cenowego $r$ (zmienna binarna)
 * $c^m = \sum_{s \in S}\sum_{r \in R} x_{sr} c^{m}_{sr}$ -- łączny koszt zakupu
     materiałów [zł]
 
@@ -73,22 +73,24 @@ Ograniczenia:
 
 * $x_s \le x^{max}_s \: \forall s \in S$ -- ilość kupionego materiału $s$ nie
     przekracza maksymalnej możliwej ilości do kupienia
-* $x_{S_2r} \ge 0 \: \forall r \in R$ -- ilość kupionego materiału $S_2$ w
-    każdym z przedziałów cenowych $r$ jest nieujemna
-* $x_{S_2r} \le r^{w}_{S_2r} \: \forall r \in R$ -- ilość kupionego materiału $S_2$
-    w każdym z przedziałów cenowych $r$ nie przekracza szerokości przedziału
-* $v_1 r^{w}_{S_11} \le x_{S_11} \le r^{w}_{S_11}$ -- ilość
-    kupionego materiału $S_1$ w przedziale cenowym $1$ jest nie większa niż jego
-    szerokość, a ponadto jest maksymalna, gdy przedział cenowy $1$ jest
-    całkowicie wykorzystany  <!--_-->
-* $v_2 r^{w}_{S_12} \le x_{S_12} \le v_1 r^{w}_{S_12}$ --
-    ilość kupionego materiału $S_1$ w przedziale cenowym $2$ jest nie większa
-    niż jego szerokość, a ponadto jest maksymalna, gdy przedział cenowy $2$ jest
-    całkowicie wykorzystany; gdy $x_{S_12} > 0$, to przedział cenowy $1$ jest
-    całkowicie wykorzystany <!--_-->
-* $0 \le x_{S_13} \le v_2 M$ --
-    ilość kupionego materiału $S_1$ w przedziale cenowym $3$ jest nieujemna; gdy
-    $x_{S_13} > 0$, to przedział cenowy $2$ jest całkowicie wykorzystany <!--_-->
+* ograniczenia ustawiające ilość kupionego materiału $S2$ w danym przedziale
+  * $x_{(S2)r} \ge 0 \: \forall r \in R$ -- ilość kupionego materiału $S2$ w
+      każdym z przedziałów cenowych $r$ jest nieujemna
+  * $x_{(S2)r} \le r^{w}_{(S2)r} \: \forall r \in R$ -- ilość kupionego materiału $S2$
+      w każdym z przedziałów cenowych $r$ nie przekracza szerokości przedziału
+* ograniczenia ustawiające ilość kupionego materiału $S1$ w danym przedziale
+  * $v_1 r^{w}_{(S1)1} \le x_{(S1)1} \le r^{w}_{(S1)1}$ -- ilość
+      kupionego materiału $S1$ w przedziale cenowym $1$ jest nie większa niż jego
+      szerokość, a ponadto jest maksymalna, gdy przedział cenowy $1$ jest
+      całkowicie wykorzystany  <!--_-->
+  * $v_2 r^{w}_{(S1)2} \le x_{(S1)2} \le v_1 r^{w}_{(S1)2}$ --
+      ilość kupionego materiału $S1$ w przedziale cenowym $2$ jest nie większa
+      niż jego szerokość, a ponadto jest maksymalna, gdy przedział cenowy $2$ jest
+      całkowicie wykorzystany; gdy $x_{(S1)2} > 0$, to przedział cenowy $1$ jest
+      całkowicie wykorzystany <!--_-->
+  * $0 \le x_{(S1)3} \le v_2 M$ --
+      ilość kupionego materiału $S1$ w przedziale cenowym $3$ jest nieujemna; gdy
+      $x_{(S1)3} > 0$, to przedział cenowy $2$ jest całkowicie wykorzystany <!--_-->
 
 ## Dowóz materiałów
 
