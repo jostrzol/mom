@@ -10,6 +10,9 @@ Wartość $M$ użyta w sprawozdaniu oznacza dowolną dostatecznie dużą stałą
 nie ogranicza w danym kontekście rozwiązania (tzn. ustalenie większej wartości
 $M$ nie zmieniłoby rozwiązania).
 
+Zmienne pomocnicze z prostymi ograniczeniami równościowymi będą zapisywane
+bezpośrednio w sekcji _Zmienne_.
+
 ## Zbiory
 
 * $S = \{S1, S2\}$ -- dostępne materiały
@@ -93,6 +96,51 @@ Ograniczenia:
       $x_{(S1)3} > 0$, to przedział cenowy $2$ jest całkowicie wykorzystany <!--_-->
 
 ## Dowóz materiałów
+
+W rozwiązaniu założyłem, że całość kupionego materiału jest gdzieś dowożona --
+w przeciwnym wypadku nie opłacałoby się kupować takiej ilości materiału, więc
+takie rozwiązanie nie mogłoby być optymalne.
+
+Parametry:
+
+* $l^{c}_{s} \: \forall s \in S$ -- ładowność ciężarówki przewożącej materiał
+    $s$ [tona]
+* $l^{n}_{S1}$ -- ładowność naczepy przewożącej materiał $S1$ [tona]
+* $c^{dc}_{s} \: \forall s \in S$ -- koszt wysyłu pojedynczej ciężarówki
+    przewożącej materiał $s$ [zł]
+* $c^{dn}_{S1}$ -- koszt wysyłu pojedynczej naczepy przewożącej materiał
+    $S1$ [zł]
+
+Zmienne:
+
+* $d^p_{S2}$ -- ilość przewożonego materiału $S2$ do przygotowalni [tona]
+* $d^c_{S2} = x_{S2} - d^p_{S2}$ -- ilość przewożonego materiału $S2$ do obróbki
+    cieplnej [tona]
+* $n^{cp}_{S1} \in \{0, 1, ..., 337\}$ -- liczba ciężarówek do przewozu materiału
+    $S1$ do przygotowalni [brak jednostki]
+* $n^{np}_{S1} \in \{0, 1, ..., 337\}$ -- liczba naczep do przewozu materiału
+    $S1$ do przygotowalni [brak jednostki]
+* $n^{cp}_{S2} \in \{0, 1, ...\}$ -- liczba ciężarówek do przewozu materiału $S2$
+    do przygotowalni [brak jednostki]
+* $n^{cc}_{S2} \in \{0, 1, ...\}$ -- liczba ciężarówek do przewozu materiału $S2$
+    do obróbki cieplnej [brak jednostki]
+* $c^d = n^{cp}_{S1} c^{dc}_{S1} + n^{np}_{S1} c^{dn}_{S1} + (n^{cp}_{S2} + n^{cc}_{S2}) c^{dc}_{S2}$
+    -- całkowity koszt dowozu [zł]
+
+Ograniczenia:
+
+* $n^{cp}_{S1} \ge n^{np}_{S1}$ -- liczba naczep nie większa niż liczba
+    ciężarówek przewożących towar $S1$
+* $x_{S1} \le n^{cp}_{S1} l^c_{S1} + n^{np}_{S1} l^n_{S1}$ -- całość kupionego
+    materiału $S1$ jest transportowana do kolejnych etapów produkcji
+* $0 \le d^p_{S2} \le x_{S2}$ -- ilość przewożonego materiału $S2$ do
+    przygotowalni jest w zakresie od 0 do ilości kupionego materiału $S2$
+* $d^p_{S2} \le n^{cp}_{S2} l^c_{S2}$ -- całość materiału $S2$ przewożonego do
+    przygotowalni mieści się do ciężarówek z materiałem $S2$ jadących do
+    przygotowalni
+* $d^c_{S2} \le n^{cc}_{S2} l^c_{S2}$ -- całość materiału $S2$ przewożonego do
+    obróbki cieplnej mieści się do ciężarówek z materiałem $S2$ jadących do
+    zakładu obróbki cieplnej
 
 ## Przetwarzanie w przygotowalni
 
