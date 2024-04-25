@@ -62,8 +62,8 @@ Parametry:
 * $c^{m}_{sr} \: \forall s \in S, \forall r \in R$ -- cena materiału $s$ w
     przedziale cenowym $r$ [zł/tona]
 * $r^{b}_{sr} \: \forall s \in S, \forall r \in R$ -- prawa granica przedziału
-    cenowego $r$ dla ceny materiału $s$ [tona]; dla $r = 3$ zmienna wynosi $M$,
-    jeśli ostatni przedział ma być nieograniczony (tak jak w treści zadania)
+    cenowego $r$ dla ceny materiału $s$ [tona]; jeśli ostatni przedział ma być
+    nieograniczony (tak jak w treści zadania), to dla $r = 3$ zmienna wynosi $M$
 * $r^{w}_{sr} \: \forall s \in S, \forall r \in R$ -- szerokość przedziału
     cenowego $r$ dla ceny materiału $s$ [tona]; parametr wyliczony w następujący
     sposób:
