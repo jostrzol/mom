@@ -1,7 +1,9 @@
 ---
-title:  'MOM projekt 1'
+title:  'MOM projekt 2'
 author: Jakub Ostrzołek
 ---
+
+# Model matematyczny rozwiązania
 
 Rozwiązanie zadania podzieliłem tematycznie na kilka części, z której każda
 została opisana w osobnym rozdziale.
@@ -37,18 +39,21 @@ Zmienne:
 * $c^p$ - łączny koszt przetwarzania w przygotowalni [zł]
 * $c^c$ - łączny koszt pracy zakładu obróbki cieplnej materiałów [zł]
 
+Funkcja celu maksymalizuje łączną rentowność procesu przetwarzania, czyli
+maksymalizuje zyski, minimalizując straty.
+
 Poszczególne koszty zostaną obliczone w kolejnych rozdziałach. Warto zauważyć,
-że maksymalizując taką funkcję celu, koszty zakupu materiału są minimalizowane.
-Będzie to przydatne już w kolejnym rozdziale.
+że maksymalizując taką funkcję celu, w szczególności koszty zakupu materiału są
+minimalizowane. Będzie to przydatne już w kolejnym rozdziale.
 
 ## Zakup materiałów
 
 Funkcje kosztu jednostkowego materiałów $S1$ i $S2$ są to odcinkami liniowe
 funkcje o dziedzinie w zbiorze nieujemnych liczb rzeczywistych. Ponadto, funkcja
-ta dla $S1$ jest wklęsła, a dla $S2$ wypukła. A zatem, mając na uwadze fakt, że
-cena materiałów jest minimalizowana, możliwe jest obliczenie całkowitego kosztu
-dla $S2$ bez użycia zmiennych całkowitoliczbowych. Dla $S1$ natomiast zajdzie
-konieczność użycia zmiennych całkowitoliczbowych.
+ta dla $S1$ jest wklęsła, a dla $S2$ wypukła. A zatem, mając na uwadze fakt z
+poprzedniego rozdziału, że cena materiałów jest minimalizowana, możliwe jest
+obliczenie całkowitego kosztu dla $S2$ bez użycia zmiennych całkowitoliczbowych.
+Dla $S1$ natomiast zajdzie konieczność użycia zmiennych całkowitoliczbowych.
 
 Parametry:
 
@@ -136,7 +141,8 @@ Zmienne:
 Ograniczenia:
 
 * $n^{cp}_{S1} \ge n^{np}_{S1}$ -- liczba naczep nie większa niż liczba
-    ciężarówek przewożących towar $S1$
+    ciężarówek przewożących towar $S1$ (bo do każdej ciężarówki można doczepić
+    maksymalnie 1 naczepę)
 * $d^p_{S1} \le n^{cp}_{S1} l^c_{S1} + n^{np}_{S1} l^n_{S1}$ -- całość
     materiału $S1$ przewożonego do przygotowalni mieści się do ciężarówek i
     naczep z materiałem $S1$ jadących do przygotowalni
@@ -215,7 +221,7 @@ Ograniczenia:
 * $v^q q^{min} \le q \le v^q q^{max}$ -- przepustowość zakładu obróbki cieplnej
     mieści się w ograniczonym zakresie, a jeśli zakład nie pracuje to wynosi 0
 
-## Zyski
+## Sprzedaż produktu
 
 W rozwiązaniu założyłem, że całość półproduktów jest zamieniana na produkty
 (w stosunku 1:1, tak jak w treści zadania), a ponadto całość wyprodukowanych
@@ -243,6 +249,91 @@ Ograniczenia:
 * $y_{w} \ge y^{min} \: \forall w \in W$ -- każdy z produktów $w$ jest
     produkowany w dostatecznej ilości, by pokryć zapotrzebowanie wynikające z
     zawartych umów
+
+# Wyniki optymalizacji
+
+## Wartość funkcji celu
+
+Wartość funkcji celu: $6273168 \ [zł]$.
+
+## Wartości zmiennych
+
+### Wartości zmiennych zakupu materiałów
+
+* $x_{sr}$ -- ilość kupionego materiału $s$ w przedziale cenowym $r$ [tona]
+
+    | $r \backslash s$ | $S1$ | $S2$
+    |------------------|:----:|:----:
+    | 1                | 2056 | 1968
+    | 2                | 2778 | 2449
+    | 3                | 4166 | 3583
+
+* $x_{s}$ -- całkowita ilość kupionego materiału $s$ [tona]
+
+    |       | $S1$ | $S2$
+    |-------|:----:|:----:
+    | $x_s$ | 9000 | 8000
+
+* $v_r$ -- czy ilość kupionego materiału $S1$ przekracza prawą granicę
+    przedziału cenowego $r$ (zmienna binarna) <!-- _ -->
+
+    |       | 1    | 2
+    |-------|:----:|:----:
+    | $v_r$ | 1    | 1
+
+* $c^m = 159232$ -- łączny koszt zakupu materiałów [zł]
+
+### Wartości zmiennych dowozu materiałów
+
+* $d^p_{s}, d^c_{s}$ -- ilość przewożonego materiału $s$ do odpowiednio
+    przygotowalni lub obróbki cieplnej [tona]
+
+    |         | $S1$ | $S2$
+    |---------|:----:|:----:
+    | $d^p_s$ | 9000 | 4600
+    | $d^c_s$ | -    | 3400
+
+* $n^{cp}_{S1} = 265$ -- liczba ciężarówek do przewozu materiału
+    $S1$ do przygotowalni [brak jednostki]
+* $n^{np}_{S1} = 265$ -- liczba naczep do przewozu materiału
+    $S1$ do przygotowalni [brak jednostki]
+* $n^{cp}_{S2} = 184$ -- liczba ciężarówek do przewozu materiału $S2$
+    do przygotowalni [brak jednostki]
+* $n^{cc}_{S2} = 136$ -- liczba ciężarówek do przewozu materiału $S2$
+    do obróbki cieplnej [brak jednostki]
+* $c^d = 957000$ -- całkowity koszt dowozu [zł]
+
+### Wartości zmiennych przetwarzania w przygotowalni
+
+* $p_{d}$ -- ilość produkowanego półproduktu $d$ w przygotowalni [tona]
+
+    |       | $D1$ | $D2$
+    |-------|:----:|:----:
+    | $p_d$ | 7280 | 6320
+
+* $p = 13600$ -- całkowita ilość produkowanych półproduktów w
+    przygotowalni [tona]
+* $n^g = 68$ -- liczba zatrudnionych grup pracowników w przygotowalni [brak
+   jednostki]
+* $n^g \cdot g^n = 136$ -- liczba zatrudnionych pracowników w przygotowalni
+    [brak jednostki]
+* $c^p = 27200$ -- całkowity koszt pracy przygotowalni [zł]
+
+### Wartości zmiennych obróbki cieplnej
+
+* $q = 3400$ -- przepustowość pracy zakładu obróbki cieplnej [tona]
+* $v^q = 1$ -- czy zakład obróbki cieplnej jest uruchomiony (zmienna binarna)
+* $c^c = 146200$ -- całkowity koszt pracy zakładu obróbki cieplnej [zł]
+
+### Wartości zmiennych sprzedaży produktu
+
+* $y_{w}$ -- ilość wyprodukowanego produktu $w$ [tona]
+
+    |       | $W1$ | $W2$
+    |-------|:----:|:----:
+    | $y_w$ | 7280 | 9720
+
+* $z = 7562800$ -- całkowity zysk ze sprzedaży produktów [zł]
 
 <!-- ### Model sieci przepływowej -->
 <!--  -->

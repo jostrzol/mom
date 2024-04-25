@@ -10,6 +10,7 @@ printf "\n# MATERIAL VARIABLES OPTIMAL VALUES\n";
 
 display material_bought;
 display material_bought_in_range;
+display S1_unit_cost_range_depleted;
 display material_cost_total;
 
 printf "\n# DELIVERY VARIABLES OPTIMAL VALUES\n";
@@ -28,12 +29,12 @@ printf "\n# FACTORY PRODUCTION VARIABLES OPTIMAL VALUES\n";
 
 display factory_stock;
 display factory_halfproduct_made;
-display factory_throughput, factory_worker_group_n * factory_worker_group_size;
+display factory_throughput, factory_worker_group_n, factory_worker_group_n * factory_worker_group_size;
 display factory_cost_total;
 
 printf "\n# HEAT TREATMENT VARIABLES OPTIMAL VALUES\n";
 
-display heat_treatment_throughput;
+display heat_treatment_throughput, heat_treatment_enabled;
 display heat_treatment_cost_total;
 
 printf "\n# REVENUE VARIABLES OPTIMAL VALUES\n";
