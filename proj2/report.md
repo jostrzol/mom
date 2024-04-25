@@ -213,17 +213,32 @@ Ograniczenia:
 
 ## Zyski
 
+W rozwiązaniu założyłem, że całość półproduktów jest zamieniana na produkty
+(w stosunku 1:1, tak jak w treści zadania), a ponadto całość wyprodukowanych
+produktów jest sprzedawana -- w przeciwnym wypadku nie opłacałoby się produkować
+nadmiarowej ilości półproduktów lub produktów, więc takie rozwiązanie nie
+mogłoby być optymalne.
+
 Parametry:
 
-* $$
+* $z_w \: \forall w \in W$ -- zysk ze sprzedaży jednostki produktu $w$ [zł/tona]
+* $y^{min}$ -- minimalna ilość sprzedaży każdego z produktów wynikająca z
+    zawartych umów [tona]
 
 Zmienne:
 
-* $$
+* $y_w \: \forall w \in W$ -- ilość wyprodukowanego produktu $w$ [tona]
+* $z = \sum_{w \in W} y_w z_w$ -- całkowity zysk ze sprzedaży produktów [zł]
 
 Ograniczenia:
 
-* $$
+* $y_{W1} = p_{D1}$ -- produkt $W1$ jest produkowany tylko z półproduktu $D1$ w
+    stosunku 1:1
+* $y_{W2} = p_{D2} + q$ -- produkt $W2$ jest produkowany z półproduktu $D2$
+    w stosunku 1:1 oraz bezpośrednio w procesie obróbki cieplnej
+* $y_{w} \ge y^{min} \: \forall w \in W$ -- każdy z produktów $w$ jest
+    produkowany w dostatecznej ilości, by pokryć zapotrzebowanie wynikające z
+    zawartych umów
 
 <!-- ### Model sieci przepływowej -->
 <!--  -->
