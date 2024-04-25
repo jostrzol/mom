@@ -13,6 +13,10 @@ $M$ nie zmieniłoby rozwiązania).
 Zmienne pomocnicze z prostymi ograniczeniami równościowymi będą zapisywane
 bezpośrednio w sekcji _Zmienne_.
 
+W rozwiązaniu rozważana jest tylko sytuacja na jeden dzień, więc w domyśle
+wszystkie wartości są w przeliczeniu na dzień, np. ilość produkowanego
+półproduktu na dzień, ilość kupowanego materiału na dzień, itp.
+
 ## Zbiory
 
 * $S = \{S1, S2\}$ -- dostępne materiały
@@ -113,6 +117,8 @@ Parametry:
 
 Zmienne:
 
+* $d^p_{S1} = x_{S1}$ -- ilość przewożonego materiału $S1$ do przygotowalni
+    [tona]
 * $d^p_{S2}$ -- ilość przewożonego materiału $S2$ do przygotowalni [tona]
 * $d^c_{S2} = x_{S2} - d^p_{S2}$ -- ilość przewożonego materiału $S2$ do obróbki
     cieplnej [tona]
@@ -131,8 +137,9 @@ Ograniczenia:
 
 * $n^{cp}_{S1} \ge n^{np}_{S1}$ -- liczba naczep nie większa niż liczba
     ciężarówek przewożących towar $S1$
-* $x_{S1} \le n^{cp}_{S1} l^c_{S1} + n^{np}_{S1} l^n_{S1}$ -- całość kupionego
-    materiału $S1$ jest transportowana do kolejnych etapów produkcji
+* $d^p_{S1} \le n^{cp}_{S1} l^c_{S1} + n^{np}_{S1} l^n_{S1}$ -- całość
+    materiału $S1$ przewożonego do przygotowalni mieści się do ciężarówek i
+    naczep z materiałem $S1$ jadących do przygotowalni
 * $0 \le d^p_{S2} \le x_{S2}$ -- ilość przewożonego materiału $S2$ do
     przygotowalni jest w zakresie od 0 do ilości kupionego materiału $S2$
 * $d^p_{S2} \le n^{cp}_{S2} l^c_{S2}$ -- całość materiału $S2$ przewożonego do
@@ -144,7 +151,46 @@ Ograniczenia:
 
 ## Przetwarzanie w przygotowalni
 
+W rozwiązaniu założyłem, że całość dowiezionego do przygotowalni materiału jest
+przerabiana -- w przeciwnym wypadku nie opłacałoby się dowozić takiej ilości
+materiału, więc takie rozwiązanie nie mogłoby być optymalne.
+
+Parametry:
+
+* $h_{sd} \: \forall s \in S, \forall d \in D$ --ilość produkowanego półproduktu
+    $d$ z jednostki materiału $s$ [tona/tona]
+* $p^{max}$ -- maksymalna całkowita ilość produkowanych półproduktów w
+    przygotowalni [tona]
+* $g^n = 2$ -- liczba pracowników w grupie pracowników [brak jednostki]
+* $g^p = 200$ -- maksymalna ilość przetworzonego materiału w przygotowalni
+    przez jedną grupę pracowników [tona]
+* $c^w$ -- koszt zatrudnienia jednego pracownika [zł]
+
+Zmienne:
+
+* $p_d \: \forall d \in D$ -- ilość produkowanego półproduktu $d$ w
+    przygotowalni [tona]
+* $p = \sum_{d \in D} p_d$ -- całkowita ilość produkowanych półproduktów w
+    przygotowalni [tona]
+* $n^g$ -- liczba zatrudnionych grup pracowników w przygotowalni [brak jednostki]
+* $c^p = n^g g^n c^w$ -- całkowity koszt pracy przygotowalni [zł], czyli łączny
+    koszt zatrudnienia pracowników
+
+Ograniczenia:
+
+* $p_d = \sum_{s \in S} d^p_s h_{sd} \: \forall d \in D$ -- ilość produkowanego
+     półproduku $d$ ze wszystkich dowiezionych do przygotowalni materiałów $s$
+* $p \le p^{max}$ -- całkowita ilość produkowanych półproduktów w przygotowalni
+    nie przekracza limitu
+* $p \le n^g g^p$ -- całkowita ilość produkowanych półproduktów w przygotowalni
+    jest ograniczona przez liczbę grup pracowników i maksymalną przepustowość
+    każdej z nich
+
 ## Obróbka cieplna
+
+W rozwiązaniu założyłem, że całość dowiezionego do zakładu obróbki cieplnej
+materiału jest obrabiana -- w przeciwnym wypadku nie opłacałoby się dowozić
+takiej ilości materiału, więc takie rozwiązanie nie mogłoby być optymalne.
 
 ## Zyski
 

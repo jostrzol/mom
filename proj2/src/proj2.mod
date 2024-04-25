@@ -92,24 +92,24 @@ s.t. S2_to_heat_treatment_all_delivered:
 
 param factory_halfproduct_per_material {Materials, HalfProducts};
 param factory_capacity;
-param factory_production_unit_size;
-param factory_worker_n_per_production_unit;
+param factory_worker_group_capacity;
+param factory_worker_group_size;
 param factory_worker_salary;
 
 var factory_stock {Materials};
 var factory_halfproduct_made {hp in HalfProducts}
   = sum {m in Materials} factory_stock[m] * factory_halfproduct_per_material[m, hp];
 var factory_throughput = sum {m in Materials} factory_stock[m];
-var factory_worker_n integer;
+var factory_worker_group_n integer;
 
-var factory_cost_total = factory_worker_n * factory_worker_salary;
+var factory_cost_total = factory_worker_group_n * factory_worker_group_size * factory_worker_salary;
 
 s.t. factory_stock_S1: factory_stock["S1"] = material_bought["S1"];
 s.t. factory_stock_S2: factory_stock["S2"] = S2_to_factory;
 s.t. factory_production_max: factory_throughput <= factory_capacity;
-s.t. factory_worker_n_min:
-  factory_worker_n >= factory_throughput /
-    factory_production_unit_size * factory_worker_n_per_production_unit;
+s.t. factory_worker_group_n_min:
+  factory_throughput <=
+    factory_worker_group_n * factory_worker_group_capacity;
 
 # HEAT TREATMENT PARAMETERS, VARIABLES AND CONSTRAINTS
 

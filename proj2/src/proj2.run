@@ -28,7 +28,7 @@ printf "\n# FACTORY PRODUCTION VARIABLES OPTIMAL VALUES\n";
 
 display factory_stock;
 display factory_halfproduct_made;
-display factory_throughput, factory_worker_n;
+display factory_throughput, factory_worker_group_n * factory_worker_group_size;
 display factory_cost_total;
 
 printf "\n# HEAT TREATMENT VARIABLES OPTIMAL VALUES\n";

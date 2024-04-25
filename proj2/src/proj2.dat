@@ -40,8 +40,8 @@ param factory_halfproduct_per_material =
   [S2,*] D1 0.8, D2 0.2,
 ;
 param factory_capacity = 13600;
-param factory_production_unit_size = 200;
-param factory_worker_n_per_production_unit = 2;
+param factory_worker_group_capacity = 200;
+param factory_worker_group_size = 2;
 param factory_worker_salary = 200;
 
 
