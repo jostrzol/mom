@@ -186,6 +186,10 @@ Ograniczenia:
     jest ograniczona przez liczbę grup pracowników i maksymalną przepustowość
     każdej z nich
 
+Rozwiązanie operuje na liczbie grup zatrudnionych pracowników, a nie na samej
+liczbie zatrudnionych pracowników. Natomiast liczba zatrudnionych pracowników
+wynosi wtedy: $n^g \cdot g^n$.
+
 ## Obróbka cieplna
 
 W rozwiązaniu założyłem, że całość dowiezionego do zakładu obróbki cieplnej
