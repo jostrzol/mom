@@ -192,7 +192,38 @@ W rozwiązaniu założyłem, że całość dowiezionego do zakładu obróbki cie
 materiału jest obrabiana -- w przeciwnym wypadku nie opłacałoby się dowozić
 takiej ilości materiału, więc takie rozwiązanie nie mogłoby być optymalne.
 
+Parametry:
+
+* $q^{min}$ -- minimalna przepustowość pracy zakładu obróbki cieplnej [tona]
+* $q^{max}$ -- maksymalna przepustowość pracy zakładu obróbki cieplnej [tona]
+* $c^q$ -- koszt pracy zakładu obróbki cieplnej na jednostkę ilości obrobionego
+    materiału [zł/tona]
+
+Zmienne:
+
+* $q = d^c_{S2}$ -- przepustowość pracy zakładu obróbki cieplnej [tona]
+* $v^q \in \{0, 1\}$ -- czy zakład obróbki cieplnej jest uruchomiony (zmienna
+    binarna)
+* $c^c = q \cdot c^q$ -- całkowity koszt pracy zakładu obróbki cieplnej [zł]
+
+Ograniczenia:
+
+* $v^q q^{min} \le q \le v^q q^{max}$ -- przepustowość zakładu obróbki cieplnej
+    mieści się w ograniczonym zakresie, a jeśli zakład nie pracuje to wynosi 0
+
 ## Zyski
+
+Parametry:
+
+* $$
+
+Zmienne:
+
+* $$
+
+Ograniczenia:
+
+* $$
 
 <!-- ### Model sieci przepływowej -->
 <!--  -->
