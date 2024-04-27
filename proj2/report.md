@@ -3,7 +3,7 @@ title:  'MOM projekt 2'
 author: Jakub Ostrzołek
 ---
 
-# Model matematyczny rozwiązania
+# Model matematyczny zadania
 
 Rozwiązanie zadania podzieliłem tematycznie na kilka części, z której każda
 została opisana w osobnym rozdziale.
@@ -61,14 +61,14 @@ Parametry:
     [tona]
 * $c^{m}_{sr} \: \forall s \in S, \forall r \in R$ -- cena materiału $s$ w
     przedziale cenowym $r$ [zł/tona]
-* $r^{b}_{sr} \: \forall s \in S, \forall r \in R$ -- prawa granica przedziału
+* $b_{sr} \: \forall s \in S, \forall r \in R$ -- prawa granica przedziału
     cenowego $r$ dla ceny materiału $s$ [tona]; jeśli ostatni przedział ma być
-    nieograniczony (tak jak w treści zadania), to dla $r = 3$ zmienna wynosi $M$
-* $r^{w}_{sr} \: \forall s \in S, \forall r \in R$ -- szerokość przedziału
+    nieograniczony (tak jak w treści zadania), to dla $r = 3$ parametr wynosi $M$
+* $b^{w}_{sr} \: \forall s \in S, \forall r \in R$ -- szerokość przedziału
     cenowego $r$ dla ceny materiału $s$ [tona]; parametr wyliczony w następujący
     sposób:
-  * $r^{w}_{s1} = r^{b}_{s1}$
-  * $r^{w}_{sr} = r^{b}_{sr} - r^{b}_{s(r-1)}$ dla $r > 1$
+  * $b^{w}_{s1} = b_{s1}$
+  * $b^{w}_{sr} = b_{sr} - b_{s(r-1)}$ dla $r > 1$
 
 Zmienne:
 
@@ -88,14 +88,14 @@ Ograniczenia:
 * ograniczenia ustawiające ilość kupionego materiału $S2$ w danym przedziale
   * $x_{(S2)r} \ge 0 \: \forall r \in R$ -- ilość kupionego materiału $S2$ w
       każdym z przedziałów cenowych $r$ jest nieujemna
-  * $x_{(S2)r} \le r^{w}_{(S2)r} \: \forall r \in R$ -- ilość kupionego materiału $S2$
+  * $x_{(S2)r} \le b^{w}_{(S2)r} \: \forall r \in R$ -- ilość kupionego materiału $S2$
       w każdym z przedziałów cenowych $r$ nie przekracza szerokości przedziału
 * ograniczenia ustawiające ilość kupionego materiału $S1$ w danym przedziale
-  * $v_1 r^{w}_{(S1)1} \le x_{(S1)1} \le r^{w}_{(S1)1}$ -- ilość
+  * $v_1 b^{w}_{(S1)1} \le x_{(S1)1} \le b^{w}_{(S1)1}$ -- ilość
       kupionego materiału $S1$ w przedziale cenowym $1$ jest nie większa niż jego
       szerokość, a ponadto jest maksymalna, gdy przedział cenowy $1$ jest
       całkowicie wykorzystany  <!--_-->
-  * $v_2 r^{w}_{(S1)2} \le x_{(S1)2} \le v_1 r^{w}_{(S1)2}$ --
+  * $v_2 b^{w}_{(S1)2} \le x_{(S1)2} \le v_1 b^{w}_{(S1)2}$ --
       ilość kupionego materiału $S1$ w przedziale cenowym $2$ jest nie większa
       niż jego szerokość, a ponadto jest maksymalna, gdy przedział cenowy $2$ jest
       całkowicie wykorzystany; gdy $x_{(S1)2} > 0$, to przedział cenowy $1$ jest
