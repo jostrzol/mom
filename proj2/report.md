@@ -57,14 +57,14 @@ Dla $S1$ natomiast zajdzie konieczność użycia zmiennych całkowitoliczbowych.
 
 Parametry:
 
-* $x^{max}_s \: \forall s \in S$ -- maksymalna ilość kupionego materiału $s$
+* $x^{max}_s \quad s \in S$ -- maksymalna ilość kupionego materiału $s$
     [tona]
-* $c^{m}_{sr} \: \forall s \in S, \forall r \in R$ -- cena materiału $s$ w
+* $c^{m}_{sr} \quad s \in S, r \in R$ -- cena materiału $s$ w
     przedziale cenowym $r$ [zł/tona]
-* $b_{sr} \: \forall s \in S, \forall r \in R$ -- prawa granica przedziału
+* $b_{sr} \quad s \in S, r \in R$ -- prawa granica przedziału
     cenowego $r$ dla ceny materiału $s$ [tona]; jeśli ostatni przedział ma być
     nieograniczony (tak jak w treści zadania), to dla $r = 3$ parametr wynosi $M$
-* $b^{w}_{sr} \: \forall s \in S, \forall r \in R$ -- szerokość przedziału
+* $b^{w}_{sr} \quad s \in S, r \in R$ -- szerokość przedziału
     cenowego $r$ dla ceny materiału $s$ [tona]; parametr wyliczony w następujący
     sposób:
   * $b^{w}_{s1} = b_{s1}$
@@ -72,11 +72,11 @@ Parametry:
 
 Zmienne:
 
-* $x_{sr} \: \forall s \in S, \forall r \in R$ -- ilość kupionego materiału $s$
+* $x_{sr} \quad s \in S, r \in R$ -- ilość kupionego materiału $s$
     w przedziale cenowym $r$ [tona]
-* $x_s = \sum_{r \in R} x_{sr}$ -- całkowita ilość kupionego materiału $s$
+* $x_s = \sum_{r \in R} x_{sr} \quad s \in S$ -- całkowita ilość kupionego materiału $s$
     [tona]
-* $v_r \in \{0, 1\} \: \forall r \in \{1, 2\}$ -- czy ilość kupionego materiału
+* $v_r \in \{0, 1\} \quad r \in \{1, 2\}$ -- czy ilość kupionego materiału
     $S1$ przekracza prawą granicę przedziału cenowego $r$ (zmienna binarna)
 * $c^m = \sum_{s \in S}\sum_{r \in R} x_{sr} c^{m}_{sr}$ -- łączny koszt zakupu
     materiałów [zł]
@@ -112,10 +112,10 @@ takie rozwiązanie nie mogłoby być optymalne.
 
 Parametry:
 
-* $l^{c}_{s} \: \forall s \in S$ -- ładowność ciężarówki przewożącej materiał
+* $l^{c}_{s} \quad s \in S$ -- ładowność ciężarówki przewożącej materiał
     $s$ [tona]
 * $l^{n}_{S1}$ -- ładowność naczepy przewożącej materiał $S1$ [tona]
-* $c^{dc}_{s} \: \forall s \in S$ -- koszt wysyłu pojedynczej ciężarówki
+* $c^{dc}_{s} \quad s \in S$ -- koszt wysyłu pojedynczej ciężarówki
     przewożącej materiał $s$ [zł]
 * $c^{dn}_{S1}$ -- koszt wysyłu pojedynczej naczepy przewożącej materiał
     $S1$ [zł]
@@ -163,7 +163,7 @@ materiału, więc takie rozwiązanie nie mogłoby być optymalne.
 
 Parametry:
 
-* $h_{sd} \: \forall s \in S, \forall d \in D$ --ilość produkowanego półproduktu
+* $h_{sd} \quad s \in S, d \in D$ --ilość produkowanego półproduktu
     $d$ z jednostki materiału $s$ [tona/tona]
 * $p^{max}$ -- maksymalna całkowita ilość produkowanych półproduktów w
     przygotowalni [tona]
@@ -174,7 +174,7 @@ Parametry:
 
 Zmienne:
 
-* $p_d \: \forall d \in D$ -- ilość produkowanego półproduktu $d$ w
+* $p_d \quad d \in D$ -- ilość produkowanego półproduktu $d$ w
     przygotowalni [tona]
 * $p = \sum_{d \in D} p_d$ -- całkowita ilość produkowanych półproduktów w
     przygotowalni [tona]
@@ -231,13 +231,13 @@ mogłoby być optymalne.
 
 Parametry:
 
-* $z_w \: \forall w \in W$ -- zysk ze sprzedaży jednostki produktu $w$ [zł/tona]
+* $z_w \quad w \in W$ -- zysk ze sprzedaży jednostki produktu $w$ [zł/tona]
 * $y^{min}$ -- minimalna ilość sprzedaży każdego z produktów wynikająca z
     zawartych umów [tona]
 
 Zmienne:
 
-* $y_w \: \forall w \in W$ -- ilość wyprodukowanego produktu $w$ [tona]
+* $y_w \quad w \in W$ -- ilość wyprodukowanego produktu $w$ [tona]
 * $z = \sum_{w \in W} y_w z_w$ -- całkowity zysk ze sprzedaży produktów [zł]
 
 Ograniczenia:
