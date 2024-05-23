@@ -1,0 +1,33 @@
+set V_in := A, B, C, D, E, F, G, H;
+
+set E :=
+  (s, *), A, B, C
+  (A, *), D, E
+  (B, *), D, E, G,
+  (C, *), D, E,
+  (D, *), F, G, H
+  (E, *), D, F, G, H
+  (*, t), F, G, H
+;
+
+param capacity :=
+  [s,*] A 10, B 13, C 17,
+  [A,*] D 15, E 10,
+  [B,*] D 4, E 9, G 9,
+  [C,*] D 20, E 10,
+  [D,*] F 10, G 3, H 2,
+  [E,*] D 20, F 5, G 5, H 5,
+  [*,t] F 15, G 13, H 7,
+;
+
+param unit_cost :=
+  [s,*] A 0, B 0, C 0,
+  [A,*] D 4, E 2,
+  [B,*] D 4, E 3, G 8,
+  [C,*] D 2, E 6,
+  [D,*] F 3, G 7, H 2,
+  [E,*] D 5, F 7, G 6, H 3,
+  [*,t] F 0, G 0, H 0,
+;
+
+param target_flow 35;

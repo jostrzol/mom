@@ -1,0 +1,8 @@
+reset;
+option solver cplex;
+model src/z2-3.mod;
+data src/z2-3.dat;
+solve;
+
+display assignment;
+display max_time;

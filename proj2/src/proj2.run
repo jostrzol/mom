@@ -1,0 +1,47 @@
+reset;
+option solver cplex;
+option display_precision 9;
+option solution_precision 9;
+model src/proj2.mod;
+data src/proj2.dat;
+solve;
+
+printf "\n# MATERIAL VARIABLES OPTIMAL VALUES\n";
+
+display material_bought;
+display material_bought_in_range;
+display S1_unit_cost_range_depleted;
+display material_cost_total;
+
+printf "\n# DELIVERY VARIABLES OPTIMAL VALUES\n";
+
+display
+  S1_to_factory_truck_n,
+  S1_to_factory_trailer_n,
+  S2_to_factory,
+  S2_to_factory_truck_n,
+  S2_to_heat_treatment,
+  S2_to_heat_treatment_truck_n
+;
+display delivery_cost_total;
+
+printf "\n# FACTORY PRODUCTION VARIABLES OPTIMAL VALUES\n";
+
+display factory_stock;
+display factory_halfproduct_made;
+display factory_throughput, factory_worker_group_n, factory_worker_group_n * factory_worker_group_size;
+display factory_cost_total;
+
+printf "\n# HEAT TREATMENT VARIABLES OPTIMAL VALUES\n";
+
+display heat_treatment_throughput, heat_treatment_enabled;
+display heat_treatment_cost_total;
+
+printf "\n# REVENUE VARIABLES OPTIMAL VALUES\n";
+
+display product_made;
+display sell_revenue_total;
+
+printf "\n# OPTIMIZATION TARGET OPTIMAL VALUE\n";
+
+display total_profit;

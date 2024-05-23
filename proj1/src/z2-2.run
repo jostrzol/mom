@@ -1,0 +1,8 @@
+reset;
+option solver cplex;
+model src/flow-min-cost.mod;
+data src/z2-2.dat;
+solve;
+
+display flow;
+display total_cost;

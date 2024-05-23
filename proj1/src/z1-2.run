@@ -1,0 +1,8 @@
+reset;
+option solver cplex;
+model src/flow-max.mod;
+data src/z1-2.dat;
+solve;
+
+display flow;
+display total_flow;

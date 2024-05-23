@@ -1,0 +1,15 @@
+reset;
+option solver cplex;
+model src/proj3.mod;
+data src/proj3.dat;
+
+let BETA := 1e-5;
+let ASPIRATION["cost"] := 200;
+let ASPIRATION["satisfaction"] := 2;
+let LAMBDA["cost"] := 1;
+let LAMBDA["satisfaction"] := 100;
+
+solve;
+display flow;
+display satisfaction;
+display total_cost;

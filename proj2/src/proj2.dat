@@ -1,0 +1,64 @@
+# GENERAL PARAMETERS
+
+param material_cost_range_n = 3;
+param M = 1e6;
+
+
+# MATERIAL PURCHASE PARAMETERS
+
+param material_limit =
+  S1 9000,
+  S2 8000,
+;
+
+param material_unit_cost =
+  [S1,*] 1 10,  2  7,  3  5,
+  [S2,*] 1  9,  2 11,  3 15,
+;
+
+param material_unit_cost_bound =
+  [S1,*] 1 2056,  2 4834,  3 Infinity,
+  [S2,*] 1 1968,  2 4417,  3 Infinity,
+;
+
+
+# MATERIAL DELIVERY PARAMETERS
+
+param S1_truck_capacity = 20;
+param S1_truck_unit_cost = 1070;
+param S1_trailer_capacity = 14;
+param S1_trailer_unit_cost = 730;
+param S1_truck_n_max = 337;
+param S2_truck_capacity = 25;
+param S2_truck_unit_cost = 1500;
+
+
+# FACTORY PRODUCTION PARAMETERS
+
+param factory_halfproduct_per_material =
+  [S1,*] D1 0.4, D2 0.6,
+  [S2,*] D1 0.8, D2 0.2,
+;
+param factory_capacity = 13600;
+param factory_worker_group_capacity = 200;
+param factory_worker_group_size = 2;
+param factory_worker_salary = 200;
+
+
+# HEAT TREATMENT PARAMETERS
+
+param heat_treatment_throughput_min = 2000;
+param heat_treatment_throughput_max = 6000;
+param heat_treatment_unit_cost = 43;
+
+
+# REVENUE PARAMETERS
+
+param product_unit_revenue =
+  W1 422,
+  W2 462,
+;
+param product_production_min =
+  W1 4250,
+  W2 4250,
+;

@@ -1,0 +1,28 @@
+set Materials := 1 2;
+set Products := A B C;
+
+param max_material_throughput :=
+  1 20
+  2 30
+;
+param product_material_cost :=
+  [A,*] 1 1, 2 2,
+  [B,*] 1 2, 2 0,
+  [C,*] 1 2, 2 3,
+;
+
+param standard_product_price :=
+  A 12
+  B 9
+  C 16
+;
+param product_discount_treshold :=
+  A 6
+  B 4
+  C 2
+;
+param discounted_product_price :=
+  A 9
+  B 7
+  C 6
+;

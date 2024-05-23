@@ -1,0 +1,21 @@
+set V_in := A, B, C, D, E, F, G, H;
+
+set E :=
+  (s, *), A, B, C
+  (A, *), D, E
+  (B, *), D, E, G,
+  (C, *), D, E,
+  (D, *), F, G, H
+  (E, *), D, F, G, H
+  (*, t), F, G, H
+;
+
+param capacity :=
+  [s,*] A 100, B 100, C 100,
+  [A,*] D 15, E 10,
+  [B,*] D 4, E 9, G 9,
+  [C,*] D 20, E 10,
+  [D,*] F 10, G 3, H 2,
+  [E,*] D 20, F 5, G 5, H 5,
+  [*,t] F 100, G 100, H 100,
+;
