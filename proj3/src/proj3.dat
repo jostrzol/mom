@@ -23,14 +23,6 @@ param: Edges: DISTRIBUTION_COST (tr):
   K5   .    .    .   0.3  0.5  0.9
   K6  2.0   .   1.0   .   1.6  1.5
 ;
-param PLANT_PRODUCTION_MAX := F1 150, F2 200;
-param WAREHOUSE_STORAGE_MAX := M1 70, M2 50, M3 100, M4 40;
-param CLIENT_DEMAND := K1 50, K2 10, K3 40, K4 35, K5 60, K6 20;
-#param CLIENT_PREFERENCE :=
-#  [K1,*] F2 1,
-#  [K2,*] M1 1,
-#  [K3,*] M2 1, M3 1,
-#  [K4,*] F1 1,
-#  [K5,*]
-#  [K6,*] M3 1, M4 1,
-#;
+param PLANT_PRODUCTION_MAX := F1 150e3, F2 200e3;
+param WAREHOUSE_STORAGE_MAX := M1 70e3, M2 50e3, M3 100e3, M4 40e3;
+param CLIENT_DEMAND := K1 50e3, K2 10e3, K3 40e3, K4 35e3, K5 60e3, K6 20e3;
