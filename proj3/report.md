@@ -7,21 +7,12 @@ author: Jakub Ostrzołek
 
 ### Ustalenia i założenia
 
-1. Zmienne pomocnicze z prostymi ograniczeniami równościowymi będą zapisywane
-   bezpośrednio w sekcji _Zmienne_.
-2. W rozwiązaniu rozważana jest tylko sytuacja na jeden miesiąc, więc w domyśle
-   wszystkie wartości są w przeliczeniu na miesiąc, np. możliwości produkcyjne
-   fabryki na miesiąc, zapotrzebowanie klienta na miesiąc, itp.
-3. Zakładam, że zapotrzebowania klientów są możliwe do spełnienia. Gdyby nie
+1. Zakładam, że zapotrzebowania klientów są możliwe do spełnienia. Gdyby nie
    były, należałoby najpierw rozwiązać problem maksymalnego przepływu.
    Alternatywnie, być może nawet lepszym wyjściem z problemu byłoby dodatkowo
    liczyć zyski ze sprzedaży i zamiast minimalizować koszty dostawy to
    maksymalizować miesięczny profit z działania przedsiębiorstwa.
-4. Do znajdywania rozwiązań efektywnych zadania posłużę się metodą punktu
-   odniesienia. Zgodnie z jej ,,inżynierską'' implementacją, użyję parametru
-   $\epsilon$ jako wagi drugiego z kryteriów (sumy maksymalizowanych wartości)
-   maksymalizacji leksykograficznej.
-5. Satysfakcję obliczam dla każdego klienta osobno, obliczając część udziału
+2. Satysfakcję obliczam dla każdego klienta osobno, obliczając część udziału
    dostaw pochodzących od preferowanych dostawców w stosunku do zapotrzebowania
    klienta. Dzięki temu satysfakcja każdego z klientów jest wyrażana liczbą
    rzeczywistą z zakresu $[0, 1]$. Dla klienta 5, który nie ma preferowanego
@@ -35,6 +26,15 @@ author: Jakub Ostrzołek
    produkowany towar. Niemniej jednak w tym konkretnym zadaniu zapotrzebowania
    klientów mają ten sam rząd wielkości, więc uznałem, że takie rozwiązanie
    będzie odpowiednie.
+3. Do znajdywania rozwiązań efektywnych zadania posłużę się metodą punktu
+   odniesienia. Zgodnie z jej ,,inżynierską'' implementacją, użyję parametru
+   $\epsilon$ jako wagi drugiego z elementów maksymalizowanego leksykograficznie
+   wektora (sumy).
+4. W rozwiązaniu rozważana jest tylko sytuacja na jeden miesiąc, więc w domyśle
+   wszystkie wartości są w przeliczeniu na miesiąc, np. możliwości produkcyjne
+   fabryki na miesiąc, zapotrzebowanie klienta na miesiąc, itp.
+5. Zmienne pomocnicze z prostymi ograniczeniami równościowymi będą zapisywane
+   bezpośrednio w sekcji _Zmienne_.
 
 ### Zbiory
 
@@ -55,8 +55,8 @@ author: Jakub Ostrzołek
 * $h_{k} \quad k \in K$ -- zapotrzebowanie klienta $k$ [tona]
 * $c_{ij} \quad (i,j) \in E$ -- koszt jednostkowy dystrybucji towaru z węzła $i$
   do $j$  [zł/tona]
-* $\epsilon$ -- waga drugiego kryterium w ,,inżynierskiej'' implementacji
-  maksymalizacji leksykograficznej
+* $\epsilon$ -- waga drugiego elementu w ,,inżynierskiej'' implementacji
+  maksymalizacji leksykograficznej [brak jednostki]
 * $\beta$ -- waga dla wartości przekraczających aspiracje w metodzie punktu
   odniesienia [brak jednostki]
 * $a_t \quad t \in T$ -- wartość aspiracji celu $t$ w metodzie punktu
@@ -81,17 +81,18 @@ author: Jakub Ostrzołek
 
 * $f_{ij} \ge 0 \quad \forall (i,j) \in E$ -- przepływ nieujemny
 * $0 \le s_k \le 1 \quad \forall k \in K$ -- satysfakcja w przedziale $[0, 1]$
-* $\sum\limits_{(p,j) \in E} f_{pj} \le g_p \quad \forall p \in P$ -- towar
-  wychodzący z fabryki $p$ nie może przekroczyć jej maksymalnej produkcji
-* $\sum\limits_{(m,j) \in E} f_{mj} \le b_m \quad \forall m \in M$ -- towar
-  przepływający przez magazyn $m$ nie może przekroczyć jej maksymalnej ilości
-  obsługiwanego towaru
-* $\sum\limits_{(i,k) \in E} f_{ik} \ge h_k \quad \forall k \in K$ -- towar
-  dostarczany do klienta $k$ musi pokryć jego zapotrzebowanie
-* $\sum\limits_{(i,w) \in E} f_{iw} = \sum\limits_{(w,j) \in E} f_{wj} \quad \forall w \in W$
+* $\sum\limits_{(p,j) \in E} f_{pj} \le g_p \quad \forall p \in P$ -- ilość
+  towaru wychodzącego z fabryki $p$ nie może przekroczyć jej maksymalnej
+  produkcji
+* $\sum\limits_{(m,j) \in E} f_{mj} \le b_m \quad \forall m \in M$ -- ilość
+  towaru przepływającego przez magazyn $m$ nie może przekroczyć jego maksymalnej
+  ilości obsługiwanego towaru
+* $\sum\limits_{(i,k) \in E} f_{ik} \ge h_k \quad \forall k \in K$ -- ilość
+  towaru dostarczanego do klienta $k$ musi pokryć jego zapotrzebowanie
+* $\sum\limits_{(i,m) \in E} f_{im} = \sum\limits_{(m,j) \in E} f_{mj} \quad \forall m \in M$
   -- towar wpływający do magazynu musi go w całości opuścić do końca miesiąca
 * $\sum\limits_{(i,k) \in U} \frac{f_{ik}}{h_k} \ge s_k \quad \forall k \in K$
-  -- obliczanie satysfakcji dla klienta $k$ zgodnie z założeniem 5
+  -- obliczanie satysfakcji dla klienta $k$ zgodnie z założeniem 2
 * ograniczenia z metody punktu odniesienia:
   * $v_C \le -\lambda_C (c^{total} - a_C)$ -- obliczanie $v_C$ dla kosztów powyżej
     aspiracji (znak minus, ponieważ minimalizujemy ryzyko)
@@ -102,7 +103,7 @@ author: Jakub Ostrzołek
   * $v_S \le \beta \lambda_S (s^{total} - a_S)$ -- obliczanie $v_S$ dla
     satysfakcji powyżej aspiracji
   * $v^{min} \le v_t \quad \forall t \in T$ -- minimalna z wartości do
-    maksymalizacji mniejsza od każdej z tych wartości
+    maksymalizacji nie większa od każdej z tych wartości
 
 ### Funkcja celu
 
@@ -124,8 +125,8 @@ solwera CPLEX. Implementacja znajduje się w plikach: `src/proj3.{dat,mod,run}`.
 
 Zostało wyznaczone dla parametrów:
 
-* $\epsilon = 0.000001$ -- wyznaczony eksperymentalnie tak, by drugie kryterium
-  nie zakłócało działania pierwszego
+* $\epsilon = 0.000001$ -- wyznaczony eksperymentalnie tak, by drugi element
+  maksymalizowanego leksykograficznie wektora nie zakłócał działania pierwszego
 * $\beta = 0.1$ -- w tym zastosowaniu nie ma dużo znaczenia, bo i tak zawsze
   wartości aspiracji są nieosiągalne
 * $\lambda_S = 10000$, $\lambda_Z = 1$ -- tak ustawione wagi mniej więcej
@@ -167,8 +168,8 @@ Wartości w przestrzeni kryteriów:
 
 Zostało wyznaczone dla parametrów:
 
-* $\epsilon = 0.000001$ -- wyznaczony eksperymentalnie tak, by drugie kryterium
-  nie zakłócało działania pierwszego
+* $\epsilon = 0.000001$ -- wyznaczony eksperymentalnie tak, by drugi element
+  maksymalizowanego leksykograficznie wektora nie zakłócał działania pierwszego
 * $\beta = 0.1$ -- w tym zastosowaniu nie ma dużo znaczenia, bo i tak zawsze
   wartości aspiracji są nieosiągalne
 * $\lambda_S = 10000$, $\lambda_Z = 1$ -- tak ustawione wagi mniej więcej
@@ -220,16 +221,8 @@ aspiracji zostały spróbkowane równomiernie z przedziałów odpowiednio:
 otrzymane rezultaty w przybliżeniu powinny pokryć cały obszar niezdominowanych
 wektorów ocen.
 
-Reszta parametrów była taka jak w poprzednich zadaniach:
-
-* $\epsilon = 0.000001$ -- wyznaczony eksperymentalnie tak, by drugie kryterium
-  nie zakłócało działania pierwszego
-* $\beta = 0.1$ -- w tym zastosowaniu nie ma dużo znaczenia, bo i tak zawsze
-  wartości aspiracji są nieosiągalne
-* $\lambda_S = 10000$, $\lambda_Z = 1$ -- tak ustawione wagi mniej więcej
-  zrównują rzędami wielkości koszty i satysfakcję; bez tego metoda miałaby
-  tendencję do poprawiania tylko jednego z kryteriów, a nawet mogłaby nie
-  działać zgodnie z oczekiwaniami
+Reszta parametrów ($\epsilon, \beta, \lambda_S$) była taka jak w poprzednich
+zadaniach.
 
 Fragment wyników eksperymentu w przestrzeni kryteriów:
 
@@ -295,16 +288,19 @@ wykres zbioru wektorów ocen niezdominowanych. Niestety w realnych problemach
 zazwyczaj sporządzenie takiego wykresu byłoby niemożliwe ze względu na zbyt dużą
 wymiarowość. Nawet wykresy 3D sprawiają człowiekowi trudności w prawidłowej
 interpretacji przez to, że widać na raz tylko jeden rzut przestrzeni, a
-podejmowanie decyzji na podstawie wykresu 4D jest już nierealistyczne.
+podejmowanie decyzji na podstawie 4D jest już nierealistyczne.
 
-Dzięki zastosowanej metodzie punktu odniesienia decydent może wybierać
-manipulować wektorem aspiracji w poszukiwaniu najbardziej odpowiedniego
-rozwiązania, a zwracane rozwiazania mają gwarancję bycia efektywnymi.
+Dzięki zastosowanej metodzie punktu odniesienia decydent może manipulować
+wektorem aspiracji w poszukiwaniu najbardziej odpowiedniego rozwiązania, a
+zwracane rozwiazania mają gwarancję bycia efektywnymi.
 
 W poniższym przykładzie oprócz wartości ocen zwracanych przez model, będę
 pokazywał także wykresy wraz z rozwiązaniami efektywnymi w przestrzeni
 koszt-satysfakcja dla lepszego zrozumienia problemu, jednak należy być przy tym
 świadomym powyższych uwag.
+
+Parametry $\epsilon, \beta, \lambda_S$ były ustawione tak jak w poprzednich
+zadaniach.
 
 Kroki symulacji podejmowania decyzji:
 
@@ -319,10 +315,10 @@ Kroki symulacji podejmowania decyzji:
 
 2. Okazało się, że biznes ma szanse być rentowny, co zadowoliło decydenta.
    Jednak ponieważ decydenta interesuje zarabianie dużych pieniędzy, to chce
-   zobaczyć jak bardzo jest w stanie obciąć koszy i obniża aspirację kosztów do
-   zera.
+   zobaczyć jak bardzo jest w stanie obciąć koszy, zatem drastycznie obniża
+   aspirację kosztów.
 
-   * aspiracje: $a_C = 0$ tyś zł, $a_S=0.00$
+   * aspiracje: $a_C = 100$ tyś zł, $a_S=0.00$
    * wynik: $c^{total} = 181$ tyś zł, $s^{total}=2.00$
 
    ![Iteracja 2 dokonywania decyzji](./out/proj3-decision-2.png)
@@ -355,7 +351,7 @@ Kroki symulacji podejmowania decyzji:
    kompromis. Ustawia aspirację na wartości pomiędzy tymi z drugiej i czwartej
    iteracji.
 
-   * aspiracje: $a_C = 200$ tyś zł, $a_S=3.00$
+   * aspiracje: $a_C = 200$ tyś zł, $a_S=3.50$
    * wynik: $c^{total} = 198$ tyś zł, $s^{total}=3.75$
 
    ![Iteracja 5 dokonywania decyzji](./out/proj3-decision-5.png)
