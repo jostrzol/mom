@@ -34,8 +34,7 @@ s.t. amperes_law {w in Warehouses}:
   sum {(s,w) in Edges} flow[s, w] = sum {(w,d) in Edges} flow[w, d];
 
 s.t. calculate_client_preference_satisfaction {c in Clients}:
-  sum {(s,c) in Edges : (s,c) in ClientPreferences} flow[s,c] / CLIENT_DEMAND[c]
-  >= satisfaction[c];
+  sum {(s,c) in ClientPreferences} flow[s,c] / CLIENT_DEMAND[c] >= satisfaction[c];
 
 
 ### REFERENCE POINT MODEL
